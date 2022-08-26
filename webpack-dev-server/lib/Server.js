@@ -56,6 +56,7 @@ class Server {
       // 把新的客户端添加到数组里，为了以后编译成功之后广播做准备
       this.sockets.push(socket)
 
+      console.log(this.sockets.length, "sockets")
       // 监听客户端断开
       socket.on("disconnect", () => {
         let index = this.sockets.indexOf(socket)
@@ -66,7 +67,7 @@ class Server {
 
       // 如果以前已经编译过了，就把上一次的hash值发给客户端
       if (this._stats) {
-        socket.emit("hash", this._stats)
+        // socket.emit("hash", this._stats)
         socket.emit("ok")
       }
     })
