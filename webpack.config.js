@@ -1,14 +1,14 @@
-const path = require("path")
-const HtmlWebpackPlugin = require("html-webpack-plugin")
-const HotModuleReplacementPlugin = require("webpack/lib/HotModuleReplacementPlugin")
-const NodePolyfillPlugin = require("node-polyfill-webpack-plugin")
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const HotModuleReplacementPlugin = require("webpack/lib/HotModuleReplacementPlugin");
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
 module.exports = {
   mode: "development",
   devtool: false,
   entry: [
-    path.resolve("./webpack-dev-server/client/index.js"),
-    path.resolve("./webpack/hot/dev-server.js"),
+    // path.resolve("./webpack-dev-server/client/index.js"),
+    // path.resolve("./webpack/hot/dev-server.js"),
     "./src/index.js",
   ],
   output: {
@@ -19,7 +19,7 @@ module.exports = {
   },
   devServer: {
     // hot: true,
-    port: 8080,
+    port: 8090,
     // 静态资源服务器
     static: {
       directory: path.resolve(__dirname, "static"),
@@ -35,4 +35,4 @@ module.exports = {
     new NodePolyfillPlugin(),
     new HotModuleReplacementPlugin(),
   ],
-}
+};
