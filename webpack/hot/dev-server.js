@@ -15,12 +15,16 @@ hotEmitter.on("webpackHotUpdate", (hotCurrentHash) => {
 });
 
 function hotCheck() {
-  hotDownloadManifest().then((update) => {
-    let chunkIds = update.c;
-    chunkIds.forEach((chunkId) => {
-      hotDownloadUpdateChunk(chunkId);
+  hotDownloadManifest()
+    .then((update) => {
+      let chunkIds = update.c;
+      chunkIds.forEach((chunkId) => {
+        hotDownloadUpdateChunk(chunkId);
+      });
+    })
+    .catch(() => {
+      window.location.reload();
     });
-  });
 }
 
 function hotDownloadManifest() {
@@ -56,7 +60,7 @@ window.webpackHotUpdate = function (chunkId, moreModules) {
     let oldModule = __webpack_require__.c[moduleId];
     // parents哪些模块引用这个模块 children这个模块引用了哪些模块
     // parents=['./src/index.js']
-    let { parents, children } = oldModule;
+    let { parents, children, hot } = oldModule;
     // 更新缓存为最新代码 缓存进行更新
     let module = (__webpack_require__.c[moduleId] = {
       i: moduleId,
@@ -64,7 +68,8 @@ window.webpackHotUpdate = function (chunkId, moreModules) {
       exports: {},
       parents,
       children,
-      hot: window.hotCreateModule(moduleId),
+      // hot: window.hotCreateModule(moduleId),
+      hot,
     });
     moreModules[moduleId].call(
       module.exports,
